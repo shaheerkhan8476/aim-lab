@@ -170,6 +170,15 @@ function StudentDashboard(){
                     >
                         Prescriptions/Refills
                     </button>
+                    <button
+                        className={`nav-link ${view === "AI" ? "active" : ""}`}
+                        onClick={() => {
+                            setView("AI");
+                            fetchPrescriptions();
+                        }}
+                    >
+                       AI Response
+                    </button>
                 </div>
 
                 {/* main */}
@@ -236,6 +245,35 @@ function StudentDashboard(){
                                         <p>...loading prescriptions...</p>
                                     )}
                                 </div>
+                            )}
+
+                            {view === "AI" && (
+                            <div>
+                                <p style={{ fontWeight: "bold" }}>Your response:</p>
+                                <p className="text-box">
+                                 Hi George, your toe is broken. I recommend heading into an Urgent Care where
+                                 they’ll use medical tape to bind it to the next toe. After a couple weeks of rest,
+                                it should heal up on its own.
+                                </p>
+                                <p style={{ fontWeight: "bold" }}>AI Response:</p>
+                                <p className="text-box">
+                                Your X-rays show a fracture in your right big toe. 
+                                It should heal well with care. I recommend keeping it immobilized—either buddy-taping it 
+                                to the next toe or using a stiff-soled shoe or walking boot. Avoid heavy weight-bearing and 
+                                keep it elevated to reduce swelling. Let me know if the pain worsens or 
+                                you notice anything unusual.
+                                </p>
+                                <div className="container">
+                                    < button className="gray-button">
+                                    Click for Long Response
+                                    </button>
+                                </div>
+                                <div className="container">
+                                    <button className="fixed-button">Click Me</button>
+                                </div>
+                            </div>
+                            
+                                
                             )}
 
                             {view === "results" && (
