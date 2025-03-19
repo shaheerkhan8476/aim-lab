@@ -343,7 +343,8 @@ func GetLLMResponseForPatient(w http.ResponseWriter, r *http.Request) {
 
 	// Create the LLM request payload.
 	llmRequest := map[string]string{
-		"message": prompt,
+		"message":  prompt,
+		"taskType": "prescription",
 	}
 
 	reqBody, err := json.Marshal(llmRequest)
@@ -650,8 +651,8 @@ func GetTasksByStudentID(w http.ResponseWriter, r *http.Request) {
 
 	//necessary to enable cors
 	(w).Header().Set("Access-Control-Allow-Origin", "*")
-    (w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-    (w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	(w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	(w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 
 	// Get the request body
 	// Example request body:

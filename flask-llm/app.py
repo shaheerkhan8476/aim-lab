@@ -50,29 +50,44 @@ def generate_text():
 @app.route("/api/message-request", methods=["POST"])
 def message_request():
     data = request.get_json() or {}
-    # Use a clear variable name:
     patient_message = data.get("message", "")
+    task_type = data.get("taskType", "patient_question")  
+
     if not patient_message:
         return jsonify({"error": "No message provided"}), 400
     else:
         print("Message:", patient_message)
+        print("TaskType:", task_type)  
 
-    # Build a detailed prompt as in the old version:
-    prompt = f"""
-    You are a medical student replying to an EHR message from a patient
-    who is under your care. You are their primary healthcare provider.
     
-    The patient wrote: "{patient_message}"
+    if task_type == "lab_result":  
+        prompt = f"""
+        
 
-    Your response should be professional, patient-friendly, and authoritative.
-    Ask the patient questions if necessary. If and only if the question is related to mental health, 
-    give them a disclaimer about calling the Suicide & Crisis Lifeline at 988.
+        respond like you are a gorilla from the jungle
+        """
+    elif task_type == "prescription":  
+        prompt = f"""
+        
 
-    **Do NOT include any sign-off, closing phrase, farewell, or any kind of concluding words like
-    "Take care," "Best," "Sincerely," "Thanks," or anything similar. Do NOT include a placeholder for a name.**
-    
-    Simply end the message after the last relevant sentence. Nothing more.
-    """
+        respond like you are an alien from space
+        """
+    else:
+        # Default prompt for patient questions (unchanged from your existing flow)
+        prompt = f"""
+        You are a medical student replying to an EHR message from a patient
+        who is under your care. You are their primary healthcare provider.
+
+        The patient wrote: "{patient_message}"
+
+        Your response should be professional, patient-friendly, and authoritative.
+        Ask the patient questions if necessary. If and only if the question is related to mental health,
+        give them a disclaimer about calling the Suicide & Crisis Lifeline at 988.
+
+        **Do NOT include any sign-off, closing phrase, farewell, or any kind of concluding words like
+        "Take care," "Best," "Sincerely," "Thanks," or anything similar.**
+        End the message after the last relevant sentence. Nothing more.
+        """
 
     try:
         response = client.chat.completions.create(
